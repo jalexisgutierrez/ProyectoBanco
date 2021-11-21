@@ -31,6 +31,18 @@ public class ClienteController {
         return (ResponseEntity<Cliente>) ResponseEntity.status(HttpStatus.NOT_FOUND);
     }
     
+    @PostMapping("/login")
+    public boolean login(@RequestBody Cliente cliente){
+        boolean login = false;
+        List<Cliente> clientes = clienteService.getAll();
+        for(int i = 0; i < clientes.size(); i++) {
+            if(clientes.get(i).getCorreo().equalsIgnoreCase(cliente.getCorreo()) && clientes.get(i).getContrasena().equals(cliente.getContrasena())) {
+                login = true;
+            }
+        }
+        return login;
+    }
+    
     @GetMapping
     public List<Cliente> getAll() {
        return clienteService.getAll();
